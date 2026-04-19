@@ -8,7 +8,7 @@ const Home = () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      window.location.href = "https://zerodha-project-gdoz.vercel.app/signup";
+      window.location.href = "https://zerodha-project-new.vercel.app//signup";
     }
   }, []);
 
