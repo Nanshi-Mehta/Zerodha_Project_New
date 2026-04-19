@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import GeneralContext from "./GeneralContext";
 
 import { Tooltip, Grow } from "@mui/material";
+
 import {
   BarChartOutlined,
   KeyboardArrowDown,
@@ -9,27 +10,18 @@ import {
   MoreHoriz,
 } from "@mui/icons-material";
 
+import { watchlist } from "../data/data";
 import { DoughnutChart } from "./DoughnoutChart";
 
+const labels = watchlist.map((item) => item.name);
+
 const WatchList = () => {
-  const [watchlist, setWatchlist] = useState([]);
-
-  // FETCH FROM BACKEND (MongoDB)
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/watchlist`)
-      .then((res) => res.json())
-      .then((data) => setWatchlist(data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  const labels = watchlist?.map((item) => item.name);
-
   const data = {
     labels,
     datasets: [
       {
         label: "Price",
-        data: watchlist?.map((stock) => stock.price),
+        data: watchlist.map((stock) => stock.price),
         backgroundColor: [
           "rgba(255, 99, 132, 0.5)",
           "rgba(54, 162, 235, 0.5)",
@@ -56,10 +48,10 @@ const WatchList = () => {
       <div className="search-container">
         <input
           type="text"
-          placeholder="Search eg:infy, bse, nifty fut weekly, gold mcx"
+          placeholder="Search eg: infy, bse, nifty"
           className="search"
         />
-        <span className="counts"> {watchlist.length} / 50</span>
+        <span className="counts">{watchlist.length} / 50</span>
       </div>
 
       <ul className="list">
@@ -75,15 +67,15 @@ const WatchList = () => {
 
 export default WatchList;
 
-// ITEM 
+// ================= ITEM =================
 
 const WatchListItem = ({ stock }) => {
-  const [showWatchlistActions, setShowWatchlistActions] = useState(false);
+  const [showActions, setShowActions] = useState(false);
 
   return (
     <li
-      onMouseEnter={() => setShowWatchlistActions(true)}
-      onMouseLeave={() => setShowWatchlistActions(false)}
+      onMouseEnter={() => setShowActions(true)}
+      onMouseLeave={() => setShowActions(false)}
     >
       <div className="item">
         <p className={stock.isDown ? "down" : "up"}>{stock.name}</p>
@@ -101,12 +93,12 @@ const WatchListItem = ({ stock }) => {
         </div>
       </div>
 
-      {showWatchlistActions && <WatchListActions uid={stock.name} />}
+      {showActions && <WatchListActions uid={stock.name} />}
     </li>
   );
 };
 
-//ACTIONS
+// ================= ACTIONS =================
 
 const WatchListActions = ({ uid }) => {
   const context = useContext(GeneralContext);
@@ -114,7 +106,7 @@ const WatchListActions = ({ uid }) => {
   return (
     <span className="actions">
       <span>
-        <Tooltip title="Buy (B)" placement="top" arrow TransitionComponent={Grow}>
+        <Tooltip title="Buy (B)" arrow TransitionComponent={Grow}>
           <button
             className="buy"
             onClick={() => context.openBuyWindow(uid)}
@@ -123,7 +115,7 @@ const WatchListActions = ({ uid }) => {
           </button>
         </Tooltip>
 
-        <Tooltip title="Sell (S)" placement="top" arrow TransitionComponent={Grow}>
+        <Tooltip title="Sell (S)" arrow TransitionComponent={Grow}>
           <button
             className="sell"
             onClick={() => context.openSellWindow(uid)}
@@ -132,13 +124,13 @@ const WatchListActions = ({ uid }) => {
           </button>
         </Tooltip>
 
-        <Tooltip title="Analytics (A)" placement="top" arrow TransitionComponent={Grow}>
+        <Tooltip title="Analytics" arrow TransitionComponent={Grow}>
           <button className="action">
             <BarChartOutlined className="icon" />
           </button>
         </Tooltip>
 
-        <Tooltip title="More" placement="top" arrow TransitionComponent={Grow}>
+        <Tooltip title="More" arrow TransitionComponent={Grow}>
           <button className="action">
             <MoreHoriz className="icon" />
           </button>
