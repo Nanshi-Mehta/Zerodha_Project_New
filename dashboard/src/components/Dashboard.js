@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 
 import Funds from "./Funds";
 import Holdings from "./Holdings";
@@ -10,24 +10,13 @@ import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
 
 const Dashboard = () => {
-  const [token, setToken] = useState(null);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tokenFromURL = params.get("token");
+  // PROTECTION
+useEffect(() => {
+  const token = localStorage.getItem("token");
 
-    if (tokenFromURL) {
-      localStorage.setItem("token", tokenFromURL);
-      setToken(tokenFromURL);
-    } else {
-      const savedToken = localStorage.getItem("token");
-      setToken(savedToken);
-    }
-  }, []);
-
-  if (!token) {
-    return <h2>Please login first</h2>;
-  }
+  console.log(token); 
+}, []);
 
   return (
     <div className="dashboard-container">
@@ -37,7 +26,7 @@ const Dashboard = () => {
 
       <div className="content">
         <Routes>
-          <Route path="/" element={<Summary />} />
+          <Route exact path="/" element={<Summary />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/holdings" element={<Holdings />} />
           <Route path="/positions" element={<Positions />} />
