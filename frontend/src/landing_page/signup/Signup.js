@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 function Signup() {
   const [isLogin, setIsLogin] = useState(false);
-  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "",
@@ -19,7 +17,7 @@ function Signup() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ---------------- SIGNUP ----------------
+  // SIGNUP 
   const handleSignup = async () => {
     if (
       !form.name.trim() ||
@@ -67,8 +65,8 @@ function Signup() {
         if (loginData.token) {
           localStorage.setItem("token", loginData.token);
 
-          // ✅ FIXED ROUTE (IMPORTANT)
-          navigate("/dashboard");
+          // REDIRECT TO DASHBOARD WEBSITE
+          window.location.href = `https://zerodha-project-new-bcbm.vercel.app?token=${data.token}`;
         }
       }
     } catch (err) {
@@ -77,7 +75,7 @@ function Signup() {
     }
   };
 
-  // ---------------- LOGIN ----------------
+  //LOGIN 
   const handleLogin = async () => {
     if (!form.email.trim() || !form.password.trim()) {
       alert("Enter email and password");
@@ -103,8 +101,8 @@ function Signup() {
 
       localStorage.setItem("token", data.token);
 
-      // ✅ FIXED ROUTE (IMPORTANT)
-      navigate("/dashboard");
+      
+      window.location.href = `https://zerodha-project-new-bcbm.vercel.app?token=${data.token}`;
     } catch (err) {
       console.log(err);
       alert("Login error");

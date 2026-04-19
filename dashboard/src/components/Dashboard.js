@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import Funds from "./Funds";
 import Holdings from "./Holdings";
@@ -10,11 +10,19 @@ import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
 
 const Dashboard = () => {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tokenFromURL = params.get("token");
+
+    if (tokenFromURL) {
+      localStorage.setItem("token", tokenFromURL);
+    }
+  }, []);
+
   const token = localStorage.getItem("token");
 
-  // PROTECTION
   if (!token) {
-    return <Navigate to="/signup" />;
+    return <h2>Please login first</h2>;
   }
 
   return (
