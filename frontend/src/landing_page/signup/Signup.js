@@ -19,7 +19,7 @@ function Signup() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // SIGNUP 
+  // ---------------- SIGNUP ----------------
   const handleSignup = async () => {
     if (
       !form.name.trim() ||
@@ -67,8 +67,8 @@ function Signup() {
         if (loginData.token) {
           localStorage.setItem("token", loginData.token);
 
-          // GO TO DASHBOARD
-          navigate("/");
+          // ✅ FIXED ROUTE (IMPORTANT)
+          navigate("/dashboard");
         }
       }
     } catch (err) {
@@ -77,7 +77,7 @@ function Signup() {
     }
   };
 
-  // LOGIN 
+  // ---------------- LOGIN ----------------
   const handleLogin = async () => {
     if (!form.email.trim() || !form.password.trim()) {
       alert("Enter email and password");
@@ -103,8 +103,8 @@ function Signup() {
 
       localStorage.setItem("token", data.token);
 
-      // GO TO DASHBOARD
-      navigate("/");
+      // ✅ FIXED ROUTE (IMPORTANT)
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
       alert("Login error");
