@@ -20,9 +20,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: true,
-    credentials: true,
-  })
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+})
 );
 app.use(bodyParser.json());
 
@@ -215,21 +215,26 @@ app.get('/allPositions', async (req, res) => {
 // Orders
 app.post("/newOrder", async (req, res) => {
   try {
+    console.log("NEW ORDER BODY:", req.body);
+
     const newOrder = new OrdersModel({
-      name: req.body.name,
-      qty: req.body.qty,
-      price: req.body.price,
-      mode: req.body.mode,
+      name: req.body.name || "UNKNOWN",
+      qty: req.body.qty || 1,
+      price: req.body.price || 0,
+      mode: req.body.mode || "BUY",
     });
 
     await newOrder.save();
 
-    res.json({ message: "Order saved" });
+    res.status(200).json({ message: "Order saved successfully" });
   } catch (err) {
-    res.status(500).json({ error: "Failed to save order" });
+    console.log("NEW ORDER ERROR:", err.message);
+
+    res.status(500).json({
+      error: err.message,
+    });
   }
 });
-
 
 // Signup
 app.post("/signup", async (req, res) => {
