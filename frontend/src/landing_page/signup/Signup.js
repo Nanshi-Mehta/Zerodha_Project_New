@@ -15,6 +15,8 @@ function Signup() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const API = process.env.REACT_APP_API_URL;
+
   // SIGNUP
   const handleSignup = async () => {
     if (!form.name || !form.email || !form.phone || !form.password) {
@@ -23,18 +25,13 @@ function Signup() {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/signup`, {
+      const res = await fetch(`${API}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(form),
       });
-
-      if (!res.ok) {
-        alert("Server error during signup");
-        return;
-      }
 
       const data = await res.json();
 
@@ -45,7 +42,8 @@ function Signup() {
       }
 
       if (data.message === "Signup successful") {
-        const loginRes = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+        // AUTO LOGIN
+        const loginRes = await fetch(`${API}/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -56,15 +54,12 @@ function Signup() {
           }),
         });
 
-        if (!loginRes.ok) {
-          alert("Auto login failed");
-          return;
-        }
-
         const loginData = await loginRes.json();
 
         if (loginData.token) {
           localStorage.setItem("token", loginData.token);
+
+          //REDIRECT TO DASHBOARD
           window.location.href = "https://zerodha-project-fu5i.vercel.app/";
         }
       }
@@ -81,7 +76,7 @@ function Signup() {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+      const res = await fetch(`${API}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,27 +87,17 @@ function Signup() {
         }),
       });
 
-      if (!res.ok) {
-        alert("Server error during login");
-        return;
-      }
-
       const data = await res.json();
 
-      if (data.message === "User not found") {
-        alert("User not found");
+      if (!data.token) {
+        alert(data.message || "Login failed");
         return;
       }
 
-      if (data.message === "Wrong password") {
-        alert("Wrong password");
-        return;
-      }
+      localStorage.setItem("token", data.token);
 
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        window.location.href = "https://zerodha-project-fu5i.vercel.app/";
-      }
+      //REDIRECT TO DASHBOARD
+      window.location.href = "https://zerodha-project-fu5i.vercel.app/";
     } catch (err) {
       alert("Something went wrong during login");
     }

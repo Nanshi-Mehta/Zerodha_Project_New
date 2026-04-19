@@ -1,5 +1,14 @@
 import React from "react";
 
+const linkStyle = {
+    background: "none",
+    border: "none",
+    padding: 0,
+    textDecoration: "none",
+    lineHeight: "2.5",
+    cursor: "pointer"
+};
+
 function CreateTicket() {
     return ( 
         <div className='container'>
@@ -14,14 +23,14 @@ function CreateTicket() {
                         <i className="fa fa-plus-circle"></i> Account Opening
                     </h4>
 
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Online Account Opening</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Offline Account Opening</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Company, Partnership and HUF Account</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Opening</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>NRI Account Opening</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Charges at Zerodha</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Zerodha IDFC FIRST Bank 3-in-1 Account</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Getting Started</a>
+                    <button style={linkStyle}>Online Account Opening</button><br/>
+                    <button style={linkStyle}>Offline Account Opening</button><br/>
+                    <button style={linkStyle}>Company, Partnership and HUF Account</button><br/>
+                    <button style={linkStyle}>Opening</button><br/>
+                    <button style={linkStyle}>NRI Account Opening</button><br/>
+                    <button style={linkStyle}>Charges at Zerodha</button><br/>
+                    <button style={linkStyle}>Zerodha IDFC FIRST Bank 3-in-1 Account</button><br/>
+                    <button style={linkStyle}>Getting Started</button>
                 </div>
 
                 <div className='col-4 p-5 mt-2 mb-2'>
@@ -29,11 +38,11 @@ function CreateTicket() {
                         <i className="fa fa-user"></i> Your Zerodha Account
                     </h4>
 
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Login Credentials</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Account Modification and Segment Addition</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>DP ID and bank details</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Your Profile</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Transfer and conversion of shares</a>
+                    <button style={linkStyle}>Login Credentials</button><br/>
+                    <button style={linkStyle}>Account Modification and Segment Addition</button><br/>
+                    <button style={linkStyle}>DP ID and bank details</button><br/>
+                    <button style={linkStyle}>Your Profile</button><br/>
+                    <button style={linkStyle}>Transfer and conversion of shares</button>
                 </div>
 
                 <div className='col-4 p-5 mt-2 mb-2'>
@@ -41,15 +50,15 @@ function CreateTicket() {
                         <i className="fa fa-bar-chart"></i> Your Zerodha Account
                     </h4>
 
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Margin/leverage, Product and Order types</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Kite Web and Mobile</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Trading FAQs</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Corporate Actions</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Sentinel</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Kite API</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Pi and other platforms</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Stockreports+</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>GTT</a>
+                    <button style={linkStyle}>Margin/leverage, Product and Order types</button><br/>
+                    <button style={linkStyle}>Kite Web and Mobile</button><br/>
+                    <button style={linkStyle}>Trading FAQs</button><br/>
+                    <button style={linkStyle}>Corporate Actions</button><br/>
+                    <button style={linkStyle}>Sentinel</button><br/>
+                    <button style={linkStyle}>Kite API</button><br/>
+                    <button style={linkStyle}>Pi and other platforms</button><br/>
+                    <button style={linkStyle}>Stockreports+</button><br/>
+                    <button style={linkStyle}>GTT</button>
                 </div>
 
                 <div className='col-4 p-5 mt-2 mb-2'>
@@ -57,10 +66,10 @@ function CreateTicket() {
                         <i className="fa fa-credit-card"></i> Account Opening
                     </h4>
 
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Adding Funds</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Fund Withdrawal</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>eMandates</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Adding Bank Accounts</a>
+                    <button style={linkStyle}>Adding Funds</button><br/>
+                    <button style={linkStyle}>Fund Withdrawal</button><br/>
+                    <button style={linkStyle}>eMandates</button><br/>
+                    <button style={linkStyle}>Adding Bank Accounts</button>
                 </div>
 
                 <div className='col-4 p-5 mt-2 mb-2'>
@@ -68,12 +77,12 @@ function CreateTicket() {
                         <i className="fa fa-circle-o-notch"></i> Console
                     </h4>
 
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Reports</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Ledger</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Portfolio</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>60 Day Challenge</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>IPO</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Referral Program</a>
+                    <button style={linkStyle}>Reports</button><br/>
+                    <button style={linkStyle}>Ledger</button><br/>
+                    <button style={linkStyle}>Portfolio</button><br/>
+                    <button style={linkStyle}>60 Day Challenge</button><br/>
+                    <button style={linkStyle}>IPO</button><br/>
+                    <button style={linkStyle}>Referral Program</button>
                 </div>
 
                 <div className='col-4 p-5 mt-2 mb-2'>
@@ -81,14 +90,14 @@ function CreateTicket() {
                         <i className="fa fa-circle-thin"></i> Coin
                     </h5>
 
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Understanding Mutual Funds</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>About Coin</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Buying and Selling through Coin</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Starting an SIP</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Managing Your Portfolio</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Coin App</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Moving to Coin</a><br/>
-                    <a href="#" onClick={(e) => e.preventDefault()} style={{ textDecoration: "none", lineHeight: "2.5" }}>Government Securities</a>
+                    <button style={linkStyle}>Understanding Mutual Funds</button><br/>
+                    <button style={linkStyle}>About Coin</button><br/>
+                    <button style={linkStyle}>Buying and Selling through Coin</button><br/>
+                    <button style={linkStyle}>Starting an SIP</button><br/>
+                    <button style={linkStyle}>Managing Your Portfolio</button><br/>
+                    <button style={linkStyle}>Coin App</button><br/>
+                    <button style={linkStyle}>Moving to Coin</button><br/>
+                    <button style={linkStyle}>Government Securities</button>
                 </div>
 
             </div>

@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const {HoldingsModel} = require('./model/HoldingsModel');
-
 const {PositionsModel} = require('./model/PositionsModel');
 const { OrdersModel } = require('./model/OrdersModel');
 
@@ -19,14 +18,12 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-app.use(cors({
-  origin: [
-    "https://zerodha-project-gdoz.vercel.app",
-    "https://zerodha-project-fu5i.vercel.app"
-  ],
-  credentials: true
-}));
-
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 
 // app.get('/addHolding', async(req, res)=>{
@@ -206,88 +203,115 @@ app.get('/allHoldings', async (req, res) => {
   }
 });
 
-app.get('/allPositions', async(req, res) => {
+app.get('/allPositions', async (req, res) => {
+  try {
     let allPositions = await PositionsModel.find({});
     res.json(allPositions);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch positions" });
+  }
 });
 
+// Orders
 app.post("/newOrder", async (req, res) => {
-    let newOrder = new OrdersModel({
-        name: req.body.name,
-        qty: req.body.qty,
-        price: req.body.price,
-        mode: req.body.mode,
+  try {
+    const newOrder = new OrdersModel({
+      name: req.body.name,
+      qty: req.body.qty,
+      price: req.body.price,
+      mode: req.body.mode,
     });
-    newOrder.save();
-    res.send("Order saved");
+
+    await newOrder.save();
+
+    res.json({ message: "Order saved" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to save order" });
+  }
 });
+
 
 // Signup
 app.post("/signup", async (req, res) => {
-  const { name, email, phone, password } = req.body;
+  try {
+    const { name, email, phone, password } = req.body;
 
-  if (!name || !email || !phone || !password) {
-    return res.json({ message: "All fields are required" });
+    if (!name || !email || !phone || !password) {
+      return res.json({ message: "All fields are required" });
+    }
+
+    const existingUser = await UserModel.findOne({ email });
+
+    if (existingUser) {
+      return res.json({ message: "User already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new UserModel({
+      name,
+      email,
+      phone,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+
+    res.json({ message: "Signup successful" });
+  } catch (err) {
+    res.status(500).json({ error: "Signup failed" });
   }
-
-  const existingUser = await UserModel.findOne({ email });
-
-  if (existingUser) {
-    return res.json({ message: "User already exists" });
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const newUser = new UserModel({
-    name,
-    email,
-    phone,
-    password: hashedPassword,
-  });
-
-  await newUser.save();
-
-  res.json({ message: "Signup successful" });
 });
 
 // Login
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.json({ message: "All fields are required" });
+    if (!email || !password) {
+      return res.json({ message: "All fields are required" });
+    }
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return res.json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.json({ message: "Wrong password" });
+    }
+
+    // secure secret
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+    res.json({
+      message: "Login successful",
+      token: token,
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Login failed" });
   }
-
-  const user = await UserModel.findOne({ email });
-
-  if (!user) {
-    return res.json({ message: "User not found" });
-  }
-
-  const isMatch = await bcrypt.compare(password, user.password);
-
-  if (!isMatch) {
-    return res.json({ message: "Wrong password" });
-  }
-
-  const token = jwt.sign({ id: user._id }, "secretkey");
-
-  res.json({
-    message: "Login successful",
-    token: token,
-  });
 });
 
-
-mongoose.connect(uri)
+// DB CONNECT
+mongoose
+  .connect(uri)
   .then(() => {
     console.log("DB connected!");
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
-
   })
   .catch((err) => {
     console.log("DB connection error:", err);
   });
+
+// GLOBAL ERROR 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Something went wrong" });
+});
