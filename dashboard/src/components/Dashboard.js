@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Funds from "./Funds";
@@ -10,16 +10,20 @@ import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
 
 const Dashboard = () => {
+  const [token, setToken] = useState(null);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tokenFromURL = params.get("token");
 
     if (tokenFromURL) {
       localStorage.setItem("token", tokenFromURL);
+      setToken(tokenFromURL);
+    } else {
+      const savedToken = localStorage.getItem("token");
+      setToken(savedToken);
     }
   }, []);
-
-  const token = localStorage.getItem("token");
 
   if (!token) {
     return <h2>Please login first</h2>;
