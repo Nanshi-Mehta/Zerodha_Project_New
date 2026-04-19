@@ -11,13 +11,13 @@ function Signup() {
     password: "",
   });
 
-  const API = process.env.REACT_APP_API_URL; // no localhost fallback
+  const API = process.env.REACT_APP_API_URL;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // SIGNUP 
+  // SIGNUP
   const handleSignup = async () => {
     if (
       !form.name.trim() ||
@@ -74,11 +74,9 @@ function Signup() {
         } catch {}
 
         if (loginData.token) {
-          localStorage.setItem("token", loginData.token);
 
-          // ✅ FIXED TOKEN
           window.location.replace(
-            `https://zerodha-project-new-bcbm.vercel.app?token=${loginData.token}`
+            `https://zerodha-project-dashboard.vercel.app/?token=${loginData.token}`
           );
         }
       }
@@ -88,7 +86,7 @@ function Signup() {
     }
   };
 
-  // LOGIN 
+  // LOGIN
   const handleLogin = async () => {
     if (!form.email.trim() || !form.password.trim()) {
       alert("Enter email and password");
@@ -120,10 +118,8 @@ function Signup() {
         return;
       }
 
-      localStorage.setItem("token", data.token);
-
       window.location.replace(
-        `https://zerodha-project-new-bcbm.vercel.app?token=${data.token}`
+        `https://zerodha-project-dashboard.vercel.app/?token=${data.token}`
       );
     } catch (err) {
       console.log(err);
