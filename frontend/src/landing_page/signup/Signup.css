@@ -4,13 +4,18 @@
   padding: 60px 20px;
   background: #ffffff;
   font-family: Arial, sans-serif;
+
+  display: flex;
+  flex-direction: column;      /* hero + form stack */
+  justify-content: center;     /* vertical center */
+  align-items: center;         /* horizontal center */
 }
 
 /* Hero section */
 .auth-container .hero-text {
   text-align: center;
   max-width: 700px;
-  margin: 0 auto 40px;
+  margin-bottom: 40px;
 }
 
 .auth-container .hero-text h1 {
@@ -25,8 +30,9 @@
   color: #666;
 }
 
-/* Center form */
+/* Form center wrapper (optional but safe) */
 .auth-container .form-center {
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -42,6 +48,12 @@
   text-align: center;
 }
 
+/* Heading */
+.auth-container .auth-box h2 {
+  margin-bottom: 20px;
+  color: #222;
+}
+
 /* Inputs */
 .auth-container .auth-box input {
   width: 100%;
@@ -49,6 +61,12 @@
   margin: 10px 0;
   border-radius: 6px;
   border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+}
+
+.auth-container .auth-box input:focus {
+  border-color: #387ed1;
 }
 
 /* Button */
@@ -60,9 +78,24 @@
   color: white;
   border: none;
   border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* Bottom */
+.auth-container .auth-box button:hover {
+  background: #2f6fc0;
+}
+
+/* Toggle text */
+.auth-container .auth-box p {
+  margin-top: 15px;
+  color: #387ed1;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Bottom spacing (if needed) */
 .auth-container .mt-5 {
   margin-top: 80px;
   text-align: center;

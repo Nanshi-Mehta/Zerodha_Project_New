@@ -11,7 +11,7 @@ function Signup() {
     password: "",
   });
 
-  const API = process.env.REACT_APP_API_URL;
+  const API = process.env.REACT_APP_API_URL; // no localhost fallback
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,6 +29,11 @@ function Signup() {
       return;
     }
 
+    if (!API) {
+      alert("API not configured");
+      return;
+    }
+
     try {
       const res = await fetch(`${API}/signup`, {
         method: "POST",
@@ -36,7 +41,10 @@ function Signup() {
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {}
 
       if (!res.ok) {
         alert(data.message || "Signup failed");
@@ -60,13 +68,18 @@ function Signup() {
           }),
         });
 
-        const loginData = await loginRes.json();
+        let loginData = {};
+        try {
+          loginData = await loginRes.json();
+        } catch {}
 
         if (loginData.token) {
           localStorage.setItem("token", loginData.token);
 
-          // REDIRECT TO DASHBOARD WEBSITE
-          window.location.href = `https://zerodha-project-new-bcbm.vercel.app?token=${data.token}`;
+          // ✅ FIXED TOKEN
+          window.location.replace(
+            `https://zerodha-project-new-bcbm.vercel.app?token=${loginData.token}`
+          );
         }
       }
     } catch (err) {
@@ -75,10 +88,15 @@ function Signup() {
     }
   };
 
-  //LOGIN 
+  // LOGIN 
   const handleLogin = async () => {
     if (!form.email.trim() || !form.password.trim()) {
       alert("Enter email and password");
+      return;
+    }
+
+    if (!API) {
+      alert("API not configured");
       return;
     }
 
@@ -92,7 +110,10 @@ function Signup() {
         }),
       });
 
-      const data = await res.json();
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {}
 
       if (!res.ok || !data.token) {
         alert(data.message || "Login failed");
@@ -101,8 +122,9 @@ function Signup() {
 
       localStorage.setItem("token", data.token);
 
-      
-      window.location.href = `https://zerodha-project-new-bcbm.vercel.app?token=${data.token}`;
+      window.location.replace(
+        `https://zerodha-project-new-bcbm.vercel.app?token=${data.token}`
+      );
     } catch (err) {
       console.log(err);
       alert("Login error");
